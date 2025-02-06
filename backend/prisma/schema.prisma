@@ -19,22 +19,34 @@ model User {
   name String?
   password String
   loggedIn Boolean @default(false)
-  Message Message[]
-  Room Room[]
+  messages Message[]
+
+  UserRoom UserRoom[]
 }
 
 model Message {
   id Int @id @default(autoincrement())
   userId Int
+  roomId Int
   content String
   createdAt DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
-  Room Room[]
+  room Room @relation(fields: [roomId], references: [id])
 }
 
 model Room {
   id Int @id @default(autoincrement())
   name String
   messages Message[]
-  users User[]
+  UserRoom UserRoom[]
+}
+
+model UserRoom {
+  userId Int
+  roomId Int
+
+  User User @relation(fields: [userId], references: [id])
+  Room Room @relation(fields: [roomId], references: [id])
+
+  @@id([userId, roomId])
 }
