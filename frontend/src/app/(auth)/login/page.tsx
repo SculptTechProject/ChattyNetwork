@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { loginSchema } from "../utils/loginValidation";
+import { loginSchema } from "@/utils/loginValidation"; //todo repair 
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -29,7 +29,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col justify-between items-center border-sky-600 transition-all">
       <main className="flex flex-col items-center justify-center flex-grow">
-        <h1 className="text-2xl font-bold mb-4">Login</h1>
+        <h1 className="text-2xl font-bold mb-4" data-aos="fade-down">Login</h1>
         <form onSubmit={handleSubmit} className="w-80 space-y-4">
           <input
             type="email"
@@ -40,6 +40,7 @@ export default function LoginPage() {
               setFormData({ ...formData, email: e.target.value })
             }
             className="border p-2 w-full rounded"
+            data-aos="fade-left"
           />
           {errors.email && <p className="text-red-500">{errors.email}</p>}
 
@@ -52,23 +53,25 @@ export default function LoginPage() {
               setFormData({ ...formData, password: e.target.value })
             }
             className="border p-2 w-full rounded"
+            data-aos="fade-right"
           />
           {errors.password && <p className="text-red-500">{errors.password}</p>}
 
           <button
             type="submit"
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+            data-aos="flip-up"
           >
             Login
           </button>
         </form>
-        <p className="pt-4">
+        <p className="pt-4" data-aos="flip-down">
           Need an account?{" "}
           <Link href="/register" className="text-blue-600 hover:underline">
             Register
           </Link>
         </p>
-        <Link href="/" className="text-blue-600 hover:underline">
+        <Link href="/" className="text-blue-600 hover:underline" data-aos="fade-up">
           Back to Home
         </Link>
       </main>

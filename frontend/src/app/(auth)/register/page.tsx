@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { registerSchema } from "../utils/registerValidation";
+import { registerSchema } from "@/utils/registerValidation";
 import Link from "next/link";
 
 export default function RegisterPage() {
@@ -29,7 +29,9 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col justify-between items-center border-sky-600 transition-all">
       <main className="flex flex-col items-center justify-center flex-grow">
-        <h1 className="text-2xl font-bold mb-4">Register</h1>
+        <h1 className="text-2xl font-bold mb-4" data-aos="fade-down">
+          Register
+        </h1>
         <form onSubmit={handleSubmit} className="w-80 space-y-4">
           <input
             type="email"
@@ -40,6 +42,7 @@ export default function RegisterPage() {
               setFormData({ ...formData, email: e.target.value })
             }
             className="border p-2 w-full rounded"
+            data-aos="fade-left"
           />
           {errors.email && <p className="text-red-500">{errors.email}</p>}
 
@@ -52,28 +55,41 @@ export default function RegisterPage() {
               setFormData({ ...formData, password: e.target.value })
             }
             className="border p-2 w-full rounded"
+            data-aos="fade-right"
           />
           {errors.password && <p className="text-red-500">{errors.password}</p>}
 
           <button
             type="submit"
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+            data-aos="flip-up"
           >
             Register
           </button>
         </form>
         <p className="pt-4">
           Have an account?{" "}
-          <Link href="/login" className="text-blue-600 hover:underline">
+          <Link
+            href="/login"
+            className="text-blue-600 hover:underline"
+            data-aos="flip-down"
+          >
             Login
           </Link>
         </p>
-        <Link href="/" className="text-blue-600 hover:underline">
+        <Link
+          href="/"
+          className="text-blue-600 hover:underline"
+          data-aos="fade-up"
+        >
           Back to Home
         </Link>
       </main>
 
-      <footer className="w-full text-gray-300 text-center py-3 mt-auto">
+      <footer
+        className="w-full text-gray-300 text-center py-3 mt-auto"
+        data-aos="fade-up"
+      >
         <p>Chatty Network &copy; {new Date().getFullYear()}</p>
       </footer>
     </div>

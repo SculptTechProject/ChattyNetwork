@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "src/",
     "paths": {
-      "@/*": [
-        "*"
-      ]
+      "@/styles/*": ["styles/*"],
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/utils/*": ["utils/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/types/*": ["types/*"],
+      "@/api/*": ["api/*"],
+      "@/lib/*": ["lib/*"]
     },
     "strict": true,
     "jsx": "preserve",
