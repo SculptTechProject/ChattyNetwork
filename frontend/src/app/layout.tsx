@@ -1,6 +1,6 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../../styles/globals.css";
+import "./styles/globals.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";

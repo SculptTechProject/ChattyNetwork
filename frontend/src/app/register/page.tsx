@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { loginSchema } from "@/utils/registerValidation";
+import { registerSchema } from "../utils/registerValidation";
 import Link from "next/link";
 
 export default function RegisterPage() {
@@ -11,7 +11,7 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validation = loginSchema.safeParse(formData);
+    const validation = registerSchema.safeParse(formData);
 
     if (!validation.success) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,12 +29,13 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col justify-between items-center border-sky-600 transition-all">
       <main className="flex flex-col items-center justify-center flex-grow">
-        <h1 className="text-2xl font-bold mb-4">Login</h1>
+        <h1 className="text-2xl font-bold mb-4">Register</h1>
         <form onSubmit={handleSubmit} className="w-80 space-y-4">
           <input
             type="email"
             placeholder="Email"
             value={formData.email}
+            required
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
@@ -45,6 +46,7 @@ export default function RegisterPage() {
           <input
             type="password"
             placeholder="Password"
+            required
             value={formData.password}
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
@@ -57,13 +59,13 @@ export default function RegisterPage() {
             type="submit"
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
           >
-            Login
+            Register
           </button>
         </form>
         <p className="pt-4">
-          Need an account?{" "}
-          <Link href="/register" className="text-blue-600 hover:underline">
-            Register
+          Have an account?{" "}
+          <Link href="/login" className="text-blue-600 hover:underline">
+            Login
           </Link>
         </p>
         <Link href="/" className="text-blue-600 hover:underline">

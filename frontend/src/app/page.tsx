@@ -7,42 +7,41 @@ export default function Home() {
 
   return (
     <div className="bg-gray-50 text-gray-800">
-      <div className="sticky top-0 bg-gray-100 px-4 py-1.5 text-center text-sm font-bold text-neutral-content shadow-lg">
+      <div className="sticky top-0 bg-gray-100 px-4 py-1.5 text-center text-sm font-bold text-neutral-content shadow-lg mx-auto">
         🏗️ App is still in beta!
       </div>
 
       {/* Navbar */}
       <header className="sticky top-0 bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="flex justify-between items-center py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-4 relative">
+            {/* Logo */}
             <Link href="/" className="text-2xl font-bold text-blue-600">
               ChattyNetwork
             </Link>
 
-            {/* Nawigacja Desktop */}
-            <nav className="hidden md:flex space-x-6">
-              <Link
-                href="/"
-                className="text-gray-700 hover:text-blue-600 transition"
-              >
-                Home
-              </Link>
-              <Link
-                href="/features"
-                className="text-gray-700 hover:text-blue-600 transition"
-              >
-                Features
-              </Link>
-              <Link
-                href="/contact"
-                className="text-gray-700 hover:text-blue-600 transition"
-              >
-                Contact
-              </Link>
-            </nav>
-
-            {/* Przycisk logowania Desktop */}
-            <div className="hidden md:block">
+            {/* Linki + Login */}
+            <div className="hidden md:flex items-center space-x-6">
+              <nav className="space-x-6">
+                <Link
+                  href="/"
+                  className="text-gray-700 hover:text-blue-600 transition"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/features"
+                  className="text-gray-700 hover:text-blue-600 transition"
+                >
+                  Features
+                </Link>
+                <Link
+                  href="/contact"
+                  className="text-gray-700 hover:text-blue-600 transition"
+                >
+                  Contact
+                </Link>
+              </nav>
               <Link
                 href="/login"
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -51,12 +50,11 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Przycisk Menu Mobilnego */}
+            {/* Hamburger */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 focus:outline-none"
-                id="menu-btn"
               >
                 <svg
                   className="w-6 h-6"
@@ -75,9 +73,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Nawigacja Mobilna */}
+          {/* Menu mobilne */}
           {isMenuOpen && (
-            <div className="absolute top-16 right-0 bg-white shadow-md rounded-b-lg p-4 space-y-2 w-full flex flex-col md:hidden">
+            <div className="md:hidden absolute top-16 inset-x-0 mx-auto bg-white shadow-md rounded-b-lg p-4 space-y-2 max-w-sm flex flex-col items-center">
               <Link
                 href="/"
                 className="block text-gray-700 hover:text-blue-600 transition-all"

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { loginSchema } from "@/utils/loginValidation";
+import { loginSchema } from "../utils/loginValidation";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -34,6 +34,7 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="Email"
+            required
             value={formData.email}
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
@@ -45,6 +46,7 @@ export default function LoginPage() {
           <input
             type="password"
             placeholder="Password"
+            required
             value={formData.password}
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
@@ -66,9 +68,9 @@ export default function LoginPage() {
             Register
           </Link>
         </p>
-          <Link href="/" className="text-blue-600 hover:underline">
-            Back to Home
-          </Link>
+        <Link href="/" className="text-blue-600 hover:underline">
+          Back to Home
+        </Link>
       </main>
 
       <footer className="w-full text-gray-300 text-center py-3 mt-auto">
