@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { loginSchema } from "@/utils/loginValidation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -15,6 +15,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -26,7 +30,7 @@ export default function LoginPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: res } = await axios.get(`${api_url}/user/login`);
+        const { data: res } = await axios.get(`${api_url}/user/count`);
         setData(res);
       } catch (error) {
         console.error(error);
@@ -38,6 +42,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const validation = loginSchema.safeParse(formData);
 
     if (!validation.success) {
@@ -47,20 +52,31 @@ export default function LoginPage() {
         fieldErrors[error.path[0]] = error.message;
       });
       setErrors(fieldErrors);
+      setIsSubmitting(false);
+
+      if (fieldErrors.email) {
+        emailRef.current?.focus();
+      } else if (fieldErrors.password) {
+        passwordRef.current?.focus();
+      }
+
       return;
     }
 
     try {
-      const res = axios.post(`${api_url}/auth/login`, {
+      const res = axios.post(`${api_url}/user/login`, {
         email: formData.email,
         password: formData.password,
       });
 
-      if ((await res).status === 200) {
+      if ((await res).status === 201) {
+        document.cookie = `token=${(await res).data.token}; path=/`;
         router.push("/dashboard");
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -76,6 +92,13 @@ export default function LoginPage() {
       )}
       {!loading && (
         <div className="min-h-screen flex flex-col justify-between items-center border-sky-600 transition-all">
+          <Link
+            href="/"
+            className="pt-2 text-2xl font-bold text-blue-600"
+            data-aos="fade-down"
+          >
+            ChattyNetwork
+          </Link>
           <main className="flex flex-col items-center justify-center flex-grow">
             <h1 className="text-2xl font-bold mb-4" data-aos="fade-down">
               Login
@@ -85,6 +108,7 @@ export default function LoginPage() {
                 type="email"
                 placeholder="Email"
                 required
+                ref={emailRef}
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -98,6 +122,7 @@ export default function LoginPage() {
                 type="password"
                 placeholder="Password"
                 required
+                ref={passwordRef}
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
@@ -113,8 +138,9 @@ export default function LoginPage() {
                 type="submit"
                 className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
                 data-aos="flip-up"
+                disabled={isSubmitting}
               >
-                Login
+                {isSubmitting ? "Loading..." : "Login"}
               </button>
             </form>
             <p className="pt-4" data-aos="flip-down">

@@ -22,6 +22,9 @@ export class UserService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
+  async getUserCount(): Promise<number> {
+    return await this.userRepository.count();
+  }
   async register(createUserDto: CreateUserDto) {
     try {
       const rounds = parseInt(process.env.SALT_ROUNDS || '10', 10);

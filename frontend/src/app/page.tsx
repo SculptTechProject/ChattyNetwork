@@ -129,6 +129,11 @@ export default function Home() {
           </Link>
         </section>
       </main>
+      <footer
+        className="w-full text-gray-300 text-center py-3 mt-auto"
+      >
+        <p>Chatty Network &copy; {new Date().getFullYear()}</p>
+      </footer>
     </div>
   );
 }
