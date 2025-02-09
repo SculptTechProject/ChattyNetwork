@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+
   return (
     <div className="bg-gray-50 text-gray-800">
       <div className="sticky top-0 bg-gray-100 px-4 py-1.5 text-center text-sm font-bold text-neutral-content shadow-lg mx-auto">
