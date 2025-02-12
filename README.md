@@ -67,5 +67,6 @@ We welcome bug reports and feature suggestions! To contribute:
 This project is available under the MIT License.
 
 ## 📬 Contact
-For any questions, feel free to reach out via Discord or email.
+For any questions, feel free to reach out via email.
+### email: sculpttechproject@gmail.com
 
