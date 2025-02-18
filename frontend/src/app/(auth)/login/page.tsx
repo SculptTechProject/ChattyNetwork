@@ -100,7 +100,7 @@ export default function LoginPage() {
             ChattyNetwork
           </Link>
           <main className="flex flex-col items-center justify-center flex-grow">
-            <h1 className="text-2xl font-bold mb-4" data-aos="fade-down">
+            <h1 className="text-2xl font-bold mb-4 text-gray-600" data-aos="fade-down">
               Login
             </h1>
             <form onSubmit={handleSubmit} className="w-80 space-y-4">
@@ -113,8 +113,7 @@ export default function LoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className="border p-2 w-full rounded"
-                data-aos="fade-left"
+                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
               />
               {errors.email && <p className="text-red-500">{errors.email}</p>}
 
@@ -127,8 +126,7 @@ export default function LoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
-                className="border p-2 w-full rounded"
-                data-aos="fade-right"
+                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
               />
               {errors.password && (
                 <p className="text-red-500">{errors.password}</p>
@@ -136,23 +134,24 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
-                data-aos="flip-up"
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:px-6 hover:py-4 hover:font-bold transition-all"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Loading..." : "Login"}
               </button>
             </form>
-            <p className="pt-4" data-aos="flip-down">
+            <p className="pt-4">
               Need an account?{" "}
-              <Link href="/register" className="text-blue-600 hover:underline">
+              <Link
+                href="/register"
+                className="text-blue-600 hover:underline hover:text-blue-400 hover:text-xl transition-all"
+              >
                 Register
               </Link>
             </p>
             <Link
               href="/"
-              className="text-blue-600 hover:underline"
-              data-aos="fade-up"
+              className="text-blue-600 hover:underline hover:text-blue-400 hover:text-xl transition-all"
             >
               Back to Home
             </Link>

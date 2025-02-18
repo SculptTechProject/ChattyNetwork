@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,29 +8,31 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  name String?
+  id       Int        @id @default(autoincrement())
+  email    String     @unique
+  name     String?
   password String
-  loggedIn Boolean @default(false)
+  loggedIn Boolean    @default(false)
   messages Message[]
-
   UserRoom UserRoom[]
 }
 
 model Message {
-  id Int @id @default(autoincrement())
-  userId Int
-  roomId Int
-  content String
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  roomId    Int
+  content   String
   createdAt DateTime @default(now())
-  user User @relation(fields: [userId], references: [id])
-  room Room @relation(fields: [roomId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([roomId], map: "Message_roomId_fkey")
+  @@index([userId], map: "Message_userId_fkey")
 }
 
 model Room {
-  id Int @id @default(autoincrement())
-  name String
+  id       Int        @id @default(autoincrement())
+  name     String
   messages Message[]
   UserRoom UserRoom[]
 }
@@ -44,9 +40,15 @@ model Room {
 model UserRoom {
   userId Int
   roomId Int
-
-  User User @relation(fields: [userId], references: [id])
-  Room Room @relation(fields: [roomId], references: [id])
+  Room   Room @relation(fields: [roomId], references: [id])
+  User   User @relation(fields: [userId], references: [id])
 
   @@id([userId, roomId])
+  @@index([roomId], map: "UserRoom_roomId_fkey")
+}
+
+model user {
+  id       Int    @id @default(autoincrement())
+  email    String @unique(map: "IDX_e12875dfb3b1d92d7d7c5377e2") @db.VarChar(255)
+  password String @db.VarChar(255)
 }

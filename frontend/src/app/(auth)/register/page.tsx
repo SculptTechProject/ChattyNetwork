@@ -93,14 +93,24 @@ export default function RegisterPage() {
       )}
       {!loading && (
         <div className="min-h-screen flex flex-col justify-between items-center border-sky-600 transition-all">
-          <Link href="/" className="pt-2 text-2xl font-bold text-blue-600" data-aos="fade-down">
+          <Link
+            href="/"
+            className="pt-2 text-2xl font-bold text-blue-600"
+            data-aos="fade-down"
+          >
             ChattyNetwork
           </Link>
-          <h1 className="text-xl font-semibold text-gray-600" data-aos="flip-up">
+          <h1
+            className="text-xl font-semibold text-gray-600"
+            data-aos="flip-up"
+          >
             Count of registered users: {userCount}
           </h1>
           <main className="flex flex-col items-center justify-center flex-grow">
-            <h1 className="text-2xl font-bold mb-4" data-aos="fade-down">
+            <h1
+              className="text-2xl font-bold mb-4 text-gray-600"
+              data-aos="fade-down"
+            >
               Register
             </h1>
             <form onSubmit={handleSubmit} className="w-80 space-y-4">
@@ -113,8 +123,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className="border p-2 w-full rounded"
-                data-aos="fade-left"
+                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
               />
               {errors.email && <p className="text-red-500">{errors.email}</p>}
 
@@ -127,8 +136,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
-                className="border p-2 w-full rounded"
-                data-aos="fade-right"
+                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
               />
               {errors.password && (
                 <p className="text-red-500">{errors.password}</p>
@@ -143,7 +151,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, confirmPassword: e.target.value })
                 }
-                className="border p-2 w-full rounded"
+                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
               />
               {errors.confirmPassword && (
                 <p className="text-red-500">{errors.confirmPassword}</p>
@@ -151,8 +159,7 @@ export default function RegisterPage() {
 
               <button
                 type="submit"
-                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
-                data-aos="flip-up"
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:px-6 hover:py-4 hover:font-bold transition-all"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Registering..." : "Register"}
@@ -162,16 +169,14 @@ export default function RegisterPage() {
               Have an account?{" "}
               <Link
                 href="/login"
-                className="text-blue-600 hover:underline"
-                data-aos="flip-down"
+                className="text-blue-600 hover:underline hover:text-blue-400 hover:text-xl transition-all"
               >
                 Login
               </Link>
             </p>
             <Link
               href="/"
-              className="text-blue-600 hover:underline"
-              data-aos="fade-up"
+              className="text-blue-600 hover:underline hover:text-blue-400 hover:text-xl transition-all"
             >
               Back to Home
             </Link>
