@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,47 +14,20 @@ datasource db {
 }
 
 model User {
-  id       Int        @id @default(autoincrement())
-  email    String     @unique
-  name     String?
-  password String
-  loggedIn Boolean    @default(false)
-  messages Message[]
-  UserRoom UserRoom[]
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  token     String?  // Opcjonalny token JWT
+  messagesSent    Message[] @relation("SentMessages")
+  messagesReceived Message[] @relation("ReceivedMessages")
 }
 
 model Message {
   id        Int      @id @default(autoincrement())
-  userId    Int
-  roomId    Int
+  sender    User     @relation("SentMessages", fields: [senderId], references: [id])
+  senderId  Int
+  receiver  User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  receiverId Int
   content   String
   createdAt DateTime @default(now())
-  room      Room     @relation(fields: [roomId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-
-  @@index([roomId], map: "Message_roomId_fkey")
-  @@index([userId], map: "Message_userId_fkey")
-}
-
-model Room {
-  id       Int        @id @default(autoincrement())
-  name     String
-  messages Message[]
-  UserRoom UserRoom[]
-}
-
-model UserRoom {
-  userId Int
-  roomId Int
-  Room   Room @relation(fields: [roomId], references: [id])
-  User   User @relation(fields: [userId], references: [id])
-
-  @@id([userId, roomId])
-  @@index([roomId], map: "UserRoom_roomId_fkey")
-}
-
-model user {
-  id       Int    @id @default(autoincrement())
-  email    String @unique(map: "IDX_e12875dfb3b1d92d7d7c5377e2") @db.VarChar(255)
-  password String @db.VarChar(255)
 }

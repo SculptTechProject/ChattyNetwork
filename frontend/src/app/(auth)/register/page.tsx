@@ -30,7 +30,7 @@ export default function RegisterPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: res } = await axios.get(`${api_url}/user/count`);
+        const { data: res } = await axios.get(`${api_url}/auth/count`);
         setUserCount(res.count);
       } catch (error) {
         console.error(error);
@@ -66,7 +66,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const res = axios.post(`${api_url}/user/register`, {
+      const res = axios.post(`${api_url}/auth/register`, {
         email: formData.email,
         password: formData.password,
       });

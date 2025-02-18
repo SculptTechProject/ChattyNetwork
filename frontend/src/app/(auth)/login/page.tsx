@@ -30,7 +30,7 @@ export default function LoginPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: res } = await axios.get(`${api_url}/user/count`);
+        const { data: res } = await axios.get(`${api_url}/auth/count`);
         setData(res);
       } catch (error) {
         console.error(error);
@@ -59,17 +59,16 @@ export default function LoginPage() {
       } else if (fieldErrors.password) {
         passwordRef.current?.focus();
       }
-
       return;
     }
 
     try {
-      const res = axios.post(`${api_url}/user/login`, {
+      const res = axios.post(`${api_url}/auth/login`, {
         email: formData.email,
         password: formData.password,
       });
 
-      if ((await res).status === 201) {
+      if ((await res).status === 200) {
         document.cookie = `token=${(await res).data.token}; path=/`;
         router.push("/dashboard");
       }
@@ -100,7 +99,10 @@ export default function LoginPage() {
             ChattyNetwork
           </Link>
           <main className="flex flex-col items-center justify-center flex-grow">
-            <h1 className="text-2xl font-bold mb-4 text-gray-600" data-aos="fade-down">
+            <h1
+              className="text-2xl font-bold mb-4 text-gray-600"
+              data-aos="fade-down"
+            >
               Login
             </h1>
             <form onSubmit={handleSubmit} className="w-80 space-y-4">
