@@ -2,11 +2,20 @@ import express from "express";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "./middleware/authMiddleware";
+import { socketIOMiddleware } from "./middleware/socketIOMiddleware";
+import { ioConnection, sendMessage, ioDisconnect } from "./controllers/ioController";
+
+interface Message {
+  id: string;
+  senderId: number;
+  receiverId: number;
+  content: string;
+  createdAt: Date;
+}
 
 const prisma = new PrismaClient();
 
@@ -21,57 +30,25 @@ const io = new Server(server, {
   },
 });
 
-app.use(cors());
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "Authorization",
+  ],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
-/* io.use((socket, next) => {
-  const token = socket.handshake.auth.token;
-  if (!token) {
-    return next(new Error("Authentication error: token missing"));
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "supersecretkey") as { userId: number };
-    socket.data.userId = decoded.userId;
-    next();
-  } catch (error) {
-    next(new Error("Authentication error: invalid token"));
-  }
-}); */
+socketIOMiddleware(io);
 
-io.on("connection", (socket) => {
-  console.log(`🟢 Użytkownik połączony: ${socket.id} (userId: ${socket.data.userId})`);
-
-  socket.on("sendMessage", async (messageData) => {
-    console.log("📩 Nowa wiadomość:", messageData);
-
-    const senderId = socket.data.userId;
-    const receiverId = messageData.receiverId;
-    const content = messageData.text;
-
-    if (!senderId || !receiverId || !content) {
-      return socket.emit("errorMessage", "Brak wymaganych danych wiadomości");
-    }
-
-    try {
-      const newMessage = await prisma.message.create({
-        data: {
-          senderId,
-          receiverId,
-          content,
-        },
-      });
-
-      io.emit("receiveMessage", newMessage);
-    } catch (error) {
-      console.error("Błąd przy zapisie wiadomości:", error);
-      socket.emit("errorMessage", "Nie udało się wysłać wiadomości");
-    }
-  });
-
-  socket.on("disconnect", () => {
-    console.log(`🔴 Użytkownik rozłączony: ${socket.id}`);
-  });
-});
+ioConnection(io); // Connection by ioSocket
 
 app.use("/api/v1/auth", authRoutes);
 

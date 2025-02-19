@@ -41,6 +41,7 @@ export default function DashboardPage() {
 
     setMessage("");
     scrollToBottom();
+    console.log(message)
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
