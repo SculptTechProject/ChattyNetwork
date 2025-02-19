@@ -1,6 +1,8 @@
 import { Server } from "socket.io";
 import { PrismaClient } from "@prisma/client";
 
+const activeUsers = new Set<number>();
+
 interface Message {
   id: string;
   senderId: number;
@@ -16,14 +18,21 @@ export const ioConnection = (io: Server) => {
     console.log(
       `🟢 Użytkownik połączony: ${socket.id} (userId: ${socket.data.userId})`
     );
+
+    activeUsers.add(socket.data.userId);
+    io.emit("activeUsers", Array.from(activeUsers));
+
     sendMessage(socket, io);
-    ioDisconnect(socket);
+    ioDisconnect(socket, io);
   });
 };
 
 export const sendMessage = (socket: any, io: Server) => {
   socket.on("sendMessage", async (messageData: Message) => {
-    console.log("📩 Nowa wiadomość:", messageData);
+    console.log(
+      `📩 Nowa wiadomość (userId: ${socket.data.userId}):`,
+      messageData
+    );
     const senderId = socket.data.userId;
     const receiverId = messageData.receiverId;
     const content = messageData.content;
@@ -50,9 +59,15 @@ export const sendMessage = (socket: any, io: Server) => {
   });
 };
 
-export const ioDisconnect = (socket: any) => {
+export const ioDisconnect = (socket: any, io: Server) => {
   socket.on("disconnect", () => {
     console.log(`🔴 Użytkownik rozłączony: ${socket.id}`);
-    socket.emit("ErrorMessage", { message: `User disconnected, id: ${socket.id}` });
+    socket.emit("ErrorMessage", {
+      message: `User disconnected, id: ${socket.id}`,
+    });
+
+    activeUsers.delete(socket.data.userId);
+
+    io.emit("activeUsers", Array.from(activeUsers));
   });
 };

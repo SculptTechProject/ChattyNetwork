@@ -11,7 +11,7 @@ const generateToken = (userId: number) => {
   const token = jwt.sign({ userId }, JWT_SECRET, {
     expiresIn: TOKEN_EXPIRY,
   } as jwt.SignOptions);
-  const decoded = jwt.decode(token) as any; 
+  const decoded = jwt.decode(token) as any;
   const expiresAt = new Date(decoded.exp * 1000);
   return { token, expiresAt };
 };
@@ -64,7 +64,10 @@ export const logout = async (
     }
 
     const token = authHeader.split(" ")[1];
-    await prisma.userToken.deleteMany({ where: { token } });
+    const decodedToken = jwt.verify(token, JWT_SECRET) as any;
+    await prisma.userToken.deleteMany({
+      where: { userId: decodedToken.userId },
+    });
 
     res.json({ message: "Logged out successfully" });
   } catch (error) {

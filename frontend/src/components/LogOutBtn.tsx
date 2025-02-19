@@ -1,15 +1,33 @@
-"use client"
+"use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
-//TODO Make a request to the server to logout the user
 export const LogOutBtn = () => {
   const router = useRouter();
 
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
+
+  if (!api_url) {
+    throw new Error("API_URL is not defined in .env");
+  }
+
   const handleLogout = async () => {
     try {
-      localStorage.removeItem("token");
+      const token = localStorage.getItem("token");
 
+      await axios.post(
+        `${api_url}/auth/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      localStorage.removeItem("token");
       document.cookie =
         "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
