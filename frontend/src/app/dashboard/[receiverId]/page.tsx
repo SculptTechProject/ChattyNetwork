@@ -23,7 +23,7 @@ export default function DashboardPage() {
       auth: { token },
     });
     socketRef.current = newSocket;
-    const currentUserId = getUserId();
+    const currentUserId = getUserId(token);
 
     newSocket.on("message", (payload) => {
       const { message: newMsg } = payload;

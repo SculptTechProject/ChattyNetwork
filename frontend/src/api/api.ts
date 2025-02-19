@@ -12,8 +12,7 @@ export function getReceiverId(): number | null {
   return receiverId ? Number(receiverId) : null;
 }
 
-export function getUserId(): number | null {
-  const token = getCookie("token");
+export function getUserId(token: string | null): number | null {
   if (!token) return null;
   try {
     const decoded = jwtDecode<JwtPayload>(token);

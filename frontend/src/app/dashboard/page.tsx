@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { io, Socket } from "socket.io-client";
-import { getCookie } from "@/api/api"; 
+import { getCookie, getUserId } from "@/api/api";
 
 interface ActiveUsersListProps {
   activeUsers: number[];
@@ -46,6 +46,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const token = getCookie("token");
+    const myUserId = getUserId(token);
 
     const newSocket = io("http://localhost:3000", {
       transports: ["websocket", "polling"],
@@ -55,7 +56,7 @@ export default function DashboardPage() {
     setSocket(newSocket);
 
     newSocket.on("activeUsers", (users: number[]) => {
-      setActiveUsers(users);
+      setActiveUsers(users.filter((id) => id !== myUserId));
     });
 
     return () => {
