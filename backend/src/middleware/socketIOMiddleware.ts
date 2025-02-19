@@ -1,5 +1,8 @@
 import { Server } from "socket.io";
 import jwt from "jsonwebtoken";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export const socketIOMiddleware = (io: Server) => {
   io.use((socket, next) => {
@@ -18,5 +21,11 @@ export const socketIOMiddleware = (io: Server) => {
     } catch (error) {
       next(new Error("Authentication error: invalid token"));
     }
+  });
+};
+
+export const fetchToken = async (user: { id: number }) => {
+  return await prisma.userToken.findUnique({
+    where: { id: user.id },
   });
 };

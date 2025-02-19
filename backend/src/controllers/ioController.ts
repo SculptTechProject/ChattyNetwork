@@ -16,6 +16,8 @@ export const ioConnection = (io: Server) => {
     console.log(
       `🟢 Użytkownik połączony: ${socket.id} (userId: ${socket.data.userId})`
     );
+    sendMessage(socket, io);
+    ioDisconnect(socket);
   });
 };
 
@@ -27,7 +29,7 @@ export const sendMessage = (socket: any, io: Server) => {
     const content = messageData.content;
 
     if (!senderId || !receiverId || !content) {
-      return socket.emit.json({
+      return socket.emit("ErrorMessage:", {
         error: "Required data to send message is invalid.",
       });
     }
@@ -43,7 +45,7 @@ export const sendMessage = (socket: any, io: Server) => {
       io.emit("message", { message: newMessage });
     } catch (error) {
       console.error("Saving message error: ", error);
-      socket.emit.json({ error: "Cannot send a message" });
+      socket.emit("ErrorMessage:", { error: "Cannot send a message" });
     }
   });
 };
@@ -51,6 +53,6 @@ export const sendMessage = (socket: any, io: Server) => {
 export const ioDisconnect = (socket: any) => {
   socket.on("disconnect", () => {
     console.log(`🔴 Użytkownik rozłączony: ${socket.id}`);
-    socket.emit.json({ message: `User disconnected, id: ${socket.id}` });
+    socket.emit("ErrorMessage", { message: `User disconnected, id: ${socket.id}` });
   });
 };

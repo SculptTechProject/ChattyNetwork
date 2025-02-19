@@ -7,7 +7,7 @@ import authRoutes from "./routes/authRoutes";
 import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "./middleware/authMiddleware";
 import { socketIOMiddleware } from "./middleware/socketIOMiddleware";
-import { ioConnection, sendMessage, ioDisconnect } from "./controllers/ioController";
+import { ioConnection } from "./controllers/ioController";
 
 interface Message {
   id: string;

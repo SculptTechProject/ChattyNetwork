@@ -8,10 +8,16 @@ import { HashLoader } from "react-spinners";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" });
-  const [errors, setErrors] = useState<{ email?: string; password?: string; confirmPassword?: string }>(
-    {}
-  );
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  }>({});
   const [loading, setLoading] = useState(true);
   const [userCount, setUserCount] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +37,7 @@ export default function RegisterPage() {
       setLoading(true);
       try {
         const { data: res } = await axios.get(`${api_url}/auth/count`);
-        setUserCount(res.count);
+        setUserCount(res.totalUsers);
       } catch (error) {
         console.error(error);
       }

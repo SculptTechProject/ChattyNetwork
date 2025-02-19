@@ -11,8 +11,19 @@ export default function DashboardPage() {
   >([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const getCookie = (name: string): string | null => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split("=");
+      if (cookieName === name) {
+        return decodeURIComponent(cookieValue);
+      }
+    }
+    return null;
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getCookie("token");
     const newSocket = io("http://localhost:3000", {
       transports: ["websocket", "polling"],
       withCredentials: true,
