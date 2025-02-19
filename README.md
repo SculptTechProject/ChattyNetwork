@@ -1,6 +1,6 @@
 # ChattyNetwork
 
-ChattyNetwork is a modern, decentralized communication platform that connects users in a secure and flexible environment. The project is built using **Next.js**, **Tailwind CSS**, **AOS**, and **Zod** for validation. The backend leverages **NestJS**, **MySQL**, and other cutting-edge technologies, all containerized with **Docker** for seamless scalability.
+ChattyNetwork is a modern, decentralized communication platform that connects users in a secure and flexible environment. The project is built using **Next.js**, **Tailwind CSS**, **AOS**, and **Zod** for validation. The backend leverages **Express.js**, **MySQL**, and other cutting-edge technologies, all containerized with **Docker** for seamless scalability.
 
 ## 🌟 Features
 - 🔒 **Secure Authentication** – Supports JWT, OAuth, and encrypted sessions.
