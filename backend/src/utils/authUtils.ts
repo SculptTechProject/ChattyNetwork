@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
-import { generateToken } from "../controllers/authController";
 
 const prisma = new PrismaClient();
 
@@ -33,45 +32,6 @@ export const registerAuth = async (
     return;
   } catch (error) {
     console.error(error);
-    next(error);
-  }
-};
-
-export const loginAuth = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      res.status(400).json({ error: "Email and password required!" });
-      return;
-    }
-
-    const user = await prisma.user.findUnique({ where: { email } });
-
-    if (!user) {
-      res.status(401).json({ error: "Invalid email or password!" });
-      return;
-    }
-
-    const hashedPassword = user.password;
-    const isPasswordValid = await bcrypt.compare(password, hashedPassword);
-
-    if (!isPasswordValid) {
-      res.status(401).json({ error: "Invalid password!" });
-      return;
-    }
-
-    const token = generateToken(user.id.toString());
-
-    res
-      .status(200)
-      .json({ message: "Login successful!", token, userId: user.id });
-    return;
-  } catch (error) {
     next(error);
   }
 };
