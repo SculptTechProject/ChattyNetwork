@@ -8,6 +8,7 @@ import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "./middleware/authMiddleware";
 import { socketIOMiddleware } from "./middleware/socketIOMiddleware";
 import { ioConnection } from "./controllers/ioController";
+import userRoutes from "./routes/userRoutes";
 
 interface Message {
   id: string;
@@ -51,6 +52,8 @@ socketIOMiddleware(io);
 ioConnection(io); // Connection by ioSocket
 
 app.use("/api/v1/auth", authRoutes);
+
+app.use("/api/v1/user", userRoutes);
 
 app.get("/api/v1/protected", authMiddleware, (req, res) => {
   res.json({ message: "This route is protected", userId: (req as any).userId });

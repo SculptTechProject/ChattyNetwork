@@ -9,11 +9,15 @@ import { HashLoader } from "react-spinners";
 export default function RegisterPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [errors, setErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;
@@ -54,9 +58,11 @@ export default function RegisterPage() {
     if (!validation.success) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fieldErrors: any = {};
-      validation.error.errors.forEach((error) => {
-        fieldErrors[error.path[0]] = error.message;
-      });
+      validation.error.errors.forEach(
+        (error: { path: (string | number)[]; message: string }) => {
+          fieldErrors[error.path[0]] = error.message;
+        }
+      );
       setErrors(fieldErrors);
       setIsSubmitting(false);
 
@@ -73,6 +79,8 @@ export default function RegisterPage() {
 
     try {
       const res = axios.post(`${api_url}/auth/register`, {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
         password: formData.password,
       });
@@ -121,6 +129,34 @@ export default function RegisterPage() {
             </h1>
             <form onSubmit={handleSubmit} className="w-80 space-y-4">
               <input
+                type="text"
+                placeholder="First Name"
+                value={formData.firstName}
+                required
+                onChange={(e) =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
+                className="border p-2 w-full rounded transition-all"
+              />
+              {errors.firstName && (
+                <p className="text-red-500">{errors.firstName}</p>
+              )}
+
+              <input
+                type="text"
+                placeholder="Last Name"
+                value={formData.lastName}
+                required
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
+                className="border p-2 w-full rounded transition-all"
+              />
+              {errors.lastName && (
+                <p className="text-red-500">{errors.lastName}</p>
+              )}
+
+              <input
                 type="email"
                 placeholder="Email"
                 value={formData.email}
@@ -129,7 +165,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
+                className="border p-2 w-full rounded transition-all"
               />
               {errors.email && <p className="text-red-500">{errors.email}</p>}
 
@@ -142,7 +178,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
-                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
+                className="border p-2 w-full rounded transition-all"
               />
               {errors.password && (
                 <p className="text-red-500">{errors.password}</p>
@@ -157,7 +193,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, confirmPassword: e.target.value })
                 }
-                className="border p-2 w-full rounded hover:px-6 hover:py-4 transition-all hover:rounded-xl hover:bg-blue-50 hover:border-none"
+                className="border p-2 w-full rounded transition-all"
               />
               {errors.confirmPassword && (
                 <p className="text-red-500">{errors.confirmPassword}</p>

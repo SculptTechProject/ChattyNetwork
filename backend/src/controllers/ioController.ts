@@ -1,7 +1,10 @@
 import { Server } from "socket.io";
 import { PrismaClient } from "@prisma/client";
 
-const activeUsers = new Set<number>();
+const activeUsers = new Map<
+  number,
+  { id: number; firstName: string; lastName: string }
+>();
 
 interface Message {
   id: string;
@@ -14,14 +17,32 @@ interface Message {
 const prisma = new PrismaClient();
 
 export const ioConnection = (io: Server) => {
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     console.log(
       `🟢 Użytkownik połączony: ${socket.id} (userId: ${socket.data.userId})`
     );
 
-    activeUsers.add(socket.data.userId);
-    io.emit("activeUsers", Array.from(activeUsers));
+    const userId = socket.data.userId;
+    if (userId) {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      });
 
+      if (user) {
+        activeUsers.set(user.id, {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        });
+
+        io.emit("activeUsers", Array.from(activeUsers.values()));
+      }
+    }
     sendMessage(socket, io);
     ioDisconnect(socket, io);
   });

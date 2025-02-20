@@ -17,6 +17,8 @@ model User {
   id                Int         @id @default(autoincrement())
   email             String      @unique
   password          String
+  firstName         String      @default("Unknown")
+  lastName          String      @default("Unknown")
   tokens            UserToken[]
   messagesSent      Message[]   @relation("SentMessages")
   messagesReceived  Message[]   @relation("ReceivedMessages")
@@ -35,7 +37,7 @@ model Message {
   id         String   @id @default(uuid())
   senderId   Int
   receiverId Int
-  content    String
+  content    String @db.Text
   createdAt  DateTime @default(now())
 
   sender   User @relation("SentMessages", fields: [senderId], references: [id])

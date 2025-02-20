@@ -4,8 +4,14 @@ import Link from "next/link";
 import { io, Socket } from "socket.io-client";
 import { getCookie, getUserId } from "@/api/api";
 
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
 interface ActiveUsersListProps {
-  activeUsers: number[];
+  activeUsers: User[];
 }
 
 const ActiveUsersList: React.FC<ActiveUsersListProps> = ({ activeUsers }) => {
@@ -16,16 +22,16 @@ const ActiveUsersList: React.FC<ActiveUsersListProps> = ({ activeUsers }) => {
       </h3>
       {activeUsers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {activeUsers.map((userId) => (
+          {activeUsers.map((user) => (
             <div
-              key={userId}
+              key={user.id}
               className="flex items-center justify-center p-4 border rounded-lg hover:bg-blue-50 transition-all hover:p-6"
             >
               <Link
-                href={`/dashboard/${userId}`}
+                href={`/dashboard/${user.id}`}
                 className="text-blue-700 font-semibold hover:underline hover:font-bold hover:text-blue-500 transition-all"
               >
-                Chat z użytkownikiem {userId}
+                Chat z użytkownikiem {user.firstName}{" "}{user.lastName}
               </Link>
             </div>
           ))}
@@ -40,7 +46,7 @@ const ActiveUsersList: React.FC<ActiveUsersListProps> = ({ activeUsers }) => {
 };
 
 export default function DashboardPage() {
-  const [activeUsers, setActiveUsers] = useState<number[]>([]);
+  const [activeUsers, setActiveUsers] = useState<User[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -55,8 +61,8 @@ export default function DashboardPage() {
     });
     setSocket(newSocket);
 
-    newSocket.on("activeUsers", (users: number[]) => {
-      setActiveUsers(users.filter((id) => id !== myUserId));
+    newSocket.on("activeUsers", (users: User[]) => {
+      setActiveUsers(users.filter((user) => user.id !== myUserId));
     });
 
     return () => {
