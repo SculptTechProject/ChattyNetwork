@@ -9,13 +9,13 @@ ChattyNetwork is a modern, decentralized communication platform that connects us
 - 🎨 **AOS Animations** – Smooth scroll effects for enhanced UX.
 - 📂 **Support for Group and Private Chats** – Users can create channels and private conversations.
 - 🌍 **Multi-Language Support** – Localization system for global users.
-- 📡 **Socket.io in NestJS** – Fast and responsive real-time communication.
+- 📡 **Socket.io in Express.js** – Fast and responsive real-time communication.
 - 📦 **Docker for Easy Deployment** – Quickly set up on any server.
 - ⚡ **pnpm for Efficient Package Management** – Better performance and dependency organization.
 
 ## 🛠 Technologies
 - **Frontend**: Next.js, Tailwind CSS, AOS, Zod
-- **Backend**: NestJS, MySQL, Socket.io
+- **Backend**: Express.js, MySQL, Socket.io
 - **Containerization**: Docker
 - **Package Management**: pnpm
 
