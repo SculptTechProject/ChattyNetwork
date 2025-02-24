@@ -18,7 +18,7 @@ const ActiveUsersList: React.FC<ActiveUsersListProps> = ({ activeUsers }) => {
   return (
     <div className="p-6 bg-white shadow-lg rounded-xl mx-auto max-w-3xl">
       <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">
-        Aktywni użytkownicy
+        Online users:
       </h3>
       {activeUsers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -31,14 +31,14 @@ const ActiveUsersList: React.FC<ActiveUsersListProps> = ({ activeUsers }) => {
                 href={`/dashboard/${user.id}`}
                 className="text-blue-700 font-semibold hover:underline hover:font-bold hover:text-blue-500 transition-all"
               >
-                Chat z użytkownikiem {user.firstName}{" "}{user.lastName}
+                Chat with: {user.firstName}{" "}{user.lastName}
               </Link>
             </div>
           ))}
         </div>
       ) : (
         <p className="text-center text-gray-500">
-          Brak aktywnych użytkowników.
+          Noone is active right now.
         </p>
       )}
     </div>

@@ -120,7 +120,7 @@ export default function DashboardPage() {
       <main className="flex flex-col items-center pt-6 h-screen bg-gray-100">
         <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-4 h-[70vh] flex flex-col">
           <h2 className="text-lg font-semibold text-gray-700 mb-2">
-            Chat z użytkownikiem{" "}
+            Chat with:{" "}
             {receiver
               ? `${receiver.firstName} ${receiver.lastName}`
               : `o ID: ${receiverId}`}
