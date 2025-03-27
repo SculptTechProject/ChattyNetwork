@@ -20,19 +20,25 @@ interface Message {
 
 const prisma = new PrismaClient();
 
+const api_url = process.env.API_URL;
+
+if (!api_url) {
+  console.error("Brak api_url w index.ts!");
+}
+
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: [`${api_url}`],
     methods: ["GET", "POST"],
   },
 });
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: [`${api_url}`],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: [
     "Origin",
