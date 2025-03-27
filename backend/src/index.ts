@@ -33,13 +33,13 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [`${api_url}`],
+    origin: [`https://chatty-network.vercel.app/`],
     methods: ["GET", "POST"],
   },
 });
 
 const corsOptions = {
-  origin: [`${api_url}`],
+  origin: [`https://chatty-network.vercel.app/`],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: [
     "Origin",
