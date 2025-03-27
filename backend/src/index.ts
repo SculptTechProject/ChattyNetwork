@@ -10,6 +10,8 @@ import { socketIOMiddleware } from "./middleware/socketIOMiddleware";
 import { ioConnection } from "./controllers/ioController";
 import userRoutes from "./routes/userRoutes";
 
+dotenv.config();
+
 interface Message {
   id: string;
   senderId: number;
@@ -26,7 +28,6 @@ if (!api_url) {
   console.error("Brak api_url w index.ts!");
 }
 
-dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
