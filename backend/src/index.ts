@@ -9,6 +9,7 @@ import { authMiddleware } from "./middleware/authMiddleware";
 import { socketIOMiddleware } from "./middleware/socketIOMiddleware";
 import { ioConnection } from "./controllers/ioController";
 import userRoutes from "./routes/userRoutes";
+import { Request, Response, NextFunction } from "express";
 
 dotenv.config();
 
@@ -37,6 +38,27 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
+app.use(((req: Request, res: Response, next: NextFunction) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://chatty-network.vercel.app"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+}) as express.RequestHandler);
+
 
 const corsOptions = {
   origin: [`https://chatty-network.vercel.app/`],
