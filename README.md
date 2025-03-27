@@ -12,13 +12,11 @@ ChattyNetwork is a modern, decentralized communication platform that connects us
 - 📂 **Support for Group and Private Chats** – Users can create channels and private conversations.
 - 🌍 **Multi-Language Support** – Localization system for global users.
 - 📡 **Socket.io in Express.js** – Fast and responsive real-time communication.
-- 📦 **Docker for Easy Deployment** – Quickly set up on any server.
 - ⚡ **pnpm for Efficient Package Management** – Better performance and dependency organization.
 
 ## 🛠 Technologies
 - **Frontend**: Next.js, Tailwind CSS, AOS, Zod
 - **Backend**: Express.js, MySQL, Socket.io
-- **Containerization**: Docker
 - **Package Management**: pnpm
 
 ## 📦 Installation
@@ -26,7 +24,6 @@ ChattyNetwork is a modern, decentralized communication platform that connects us
 - Node.js (recommended version 18+)
 - MySQL
 - pnpm
-- Docker (optional)
 
 ```bash
 # Clone the repository
@@ -40,35 +37,9 @@ pnpm install
 pnpm dev
 ```
 
-## 📄 Project Structure
-```
-📦 ChattyNetwork
- ┣ 📂 frontend (Next.js + Tailwind CSS)
- ┣ 📂 backend (NestJS + MySQL)
- ┣ 📂 database (migrations and models)
- ┣ 📂 docker (container configurations)
- ┣ 📜 README.md
- ┣ 📜 package.json
-```
-
 ## 🌍 Planned Features
 - 📜 Message history and cross-device synchronization.
 - 🎤 Voice and video chat support.
 - 🔔 Real-time notifications.
 - 📜 Message editing and deletion.
-- 🎨 Full UI customization.
-
-## 🤝 Contributing
-We welcome bug reports and feature suggestions! To contribute:
-1. Fork the repository.
-2. Create a new branch (`feature/your-feature-name`).
-3. Make your changes and commit them.
-4. Open a pull request.
-
-## 📜 License
-This project is available under the MIT License.
-
-## 📬 Contact
-For any questions, feel free to reach out via email.
-### email: sculpttechproject@gmail.com
-
+- 🎨 Full UI customization
