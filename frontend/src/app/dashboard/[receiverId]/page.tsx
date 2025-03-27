@@ -43,7 +43,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const token = getCookie("token");
-    const newSocket = io("http://localhost:3000", {
+    const newSocket = io(`${api_url}`, {
       transports: ["websocket", "polling"],
       withCredentials: true,
       auth: { token },

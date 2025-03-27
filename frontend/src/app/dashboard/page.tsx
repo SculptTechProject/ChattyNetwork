@@ -4,6 +4,12 @@ import Link from "next/link";
 import { io, Socket } from "socket.io-client";
 import { getCookie, getUserId } from "@/api/api";
 
+const api_url = process.env.NEXT_PUBLIC_API_URL;
+
+if (!api_url) {
+  throw new Error("API_URL is not defined in .env");
+}
+
 interface User {
   id: number;
   firstName: string;
@@ -54,7 +60,7 @@ export default function DashboardPage() {
     const token = getCookie("token");
     const myUserId = getUserId(token);
 
-    const newSocket = io("http://localhost:3000", {
+    const newSocket = io(`${api_url}`, {
       transports: ["websocket", "polling"],
       withCredentials: true,
       auth: { token },
